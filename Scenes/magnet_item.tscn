@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtqmuwwelcd0j"]
+
+[ext_resource type="Script" path="res://Scripts/magnet_item.gd" id="1_rssc8"]
+[ext_resource type="Texture2D" uid="uid://o4hihqbq3r3h" path="res://Texture/Retro Inventory/Upgrades/Magnet.png" id="1_tdibk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_km2j3"]
+size = Vector2(8, 8)
+
+[node name="Magnet_Item" type="Area2D" groups=["Magnet"]]
+z_index = 2
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_rssc8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1.63913e-07, -0.947754)
+scale = Vector2(0.25, 0.264345)
+texture = ExtResource("1_tdibk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_km2j3")

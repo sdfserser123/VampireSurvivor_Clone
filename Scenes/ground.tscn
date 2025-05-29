@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bh3ro6ujyatpv"]
+
+[ext_resource type="Texture2D" uid="uid://cdd5hx4owml77" path="res://Texture/Ground/Tilemap_Flat.png" id="1_hu11g"]
+
+[node name="Sprite2D" type="Sprite2D"]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("1_hu11g")
+region_enabled = true
+region_rect = Rect2(77, 77, 67, 67)

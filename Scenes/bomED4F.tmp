@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://dspii8cqm5ogc"]
+
+[ext_resource type="Script" path="res://Scripts/bomb_drone.gd" id="1_m8a4u"]
+[ext_resource type="Texture2D" uid="uid://b6n70j2c35f74" path="res://Texture/Projectile/Bomb.png" id="1_nd5l2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hfk84"]
+size = Vector2(16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2dd6h"]
+radius = 347.144
+
+[node name="BombDrone" type="Area2D" groups=["Attack"]]
+top_level = true
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_m8a4u")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("1_nd5l2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_hfk84")
+disabled = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="snd_play" type="AudioStreamPlayer" parent="."]
+
+[node name="EnemyDetection" type="Area2D" parent="."]
+
+[node name="DetectingArea" type="CollisionShape2D" parent="EnemyDetection"]
+shape = SubResource("CircleShape2D_2dd6h")
+
+[node name="StartupTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="EnemyDetection" to="." method="_on_enemy_detection_area_entered"]
+[connection signal="area_exited" from="EnemyDetection" to="." method="_on_enemy_detection_area_exited"]
+[connection signal="body_entered" from="EnemyDetection" to="." method="_on_enemy_detection_body_entered"]
+[connection signal="body_exited" from="EnemyDetection" to="." method="_on_enemy_detection_body_exited"]
+[connection signal="timeout" from="StartupTimer" to="." method="_on_startup_timer_timeout"]

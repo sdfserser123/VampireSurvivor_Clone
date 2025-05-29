@@ -1,0 +1,116 @@
+[gd_scene load_steps=11 format=3 uid="uid://bxt1udb43ewng"]
+
+[ext_resource type="Script" path="res://Scripts/emeny.gd" id="1_fhkft"]
+[ext_resource type="Texture2D" uid="uid://diiseig65xsbe" path="res://Texture/Emeny/Walk/walk_Left_Down.png" id="2_2w7y7"]
+[ext_resource type="PackedScene" uid="uid://bdum5bui01qx5" path="res://Scenes/hurt_box.tscn" id="3_s8h47"]
+[ext_resource type="PackedScene" uid="uid://c1mwwjkhct6iq" path="res://Scenes/hit_box.tscn" id="4_msbj4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0peov"]
+size = Vector2(7, 17)
+
+[sub_resource type="Animation" id="Animation_olg1w"]
+length = 1.6
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_a4qjx"]
+resource_name = "walking"
+length = 1.6
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.366667, 0.566667, 0.766667, 0.966667, 1.16667, 1.36667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t70hr"]
+_data = {
+"RESET": SubResource("Animation_olg1w"),
+"walking": SubResource("Animation_a4qjx")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vm6da"]
+size = Vector2(9, 19)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ixbx"]
+size = Vector2(10, 20)
+
+[node name="Enemy" type="RigidBody2D" groups=["Enemy"]]
+script = ExtResource("1_fhkft")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_0peov")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_2w7y7")
+hframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_t70hr")
+}
+autoplay = "walking"
+
+[node name="HurtBox" parent="." instance=ExtResource("3_s8h47")]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_vm6da")
+
+[node name="HitBox" parent="." instance=ExtResource("4_msbj4")]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+shape = SubResource("RectangleShape2D_2ixbx")
+
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+
+[editable path="HurtBox"]
+[editable path="HitBox"]

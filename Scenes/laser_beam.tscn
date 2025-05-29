@@ -1,0 +1,101 @@
+[gd_scene load_steps=11 format=3 uid="uid://bqwp12r8bcukr"]
+
+[ext_resource type="Script" path="res://Scripts/laser_beam.gd" id="1_nbmml"]
+[ext_resource type="Texture2D" uid="uid://ch611auea8nsy" path="res://Texture/FX/Bullet 24x24 Free  Part 1B.png" id="2_8b878"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_c4o4d"]
+particles_animation = true
+particles_anim_h_frames = 8
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_ocmca"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.554054, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_o7t8g"]
+curve = SubResource("Curve_ocmca")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0skn3"]
+particle_flag_disable_z = true
+spread = 30.682
+initial_velocity_min = 120.0
+initial_velocity_max = 120.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_o7t8g")
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vb3ku"]
+atlas = ExtResource("2_8b878")
+region = Rect2(192, 0, 192, 24)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_k7y7f"]
+particle_flag_disable_z = true
+spread = 30.682
+initial_velocity_min = 250.0
+initial_velocity_max = 250.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_o7t8g")
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7twtx"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, 98, 0)
+tangential_accel_min = 100.0
+tangential_accel_max = 100.0
+
+[sub_resource type="Environment" id="Environment_p0gyh"]
+background_mode = 3
+glow_enabled = true
+glow_levels/4 = 1.0
+glow_intensity = 0.12
+glow_strength = 0.87
+glow_blend_mode = 1
+
+[node name="LaserBeam" type="RayCast2D"]
+position = Vector2(290, 141)
+collision_mask = 4
+collide_with_areas = true
+script = ExtResource("1_nbmml")
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 100, 0)
+width = 3.0
+default_color = Color(1, 36.757, 82.162, 1)
+
+[node name="CastingParticle" type="GPUParticles2D" parent="."]
+modulate = Color(2.703, 57.838, 100, 1)
+material = SubResource("CanvasItemMaterial_c4o4d")
+scale = Vector2(0.5, 0.5)
+process_material = SubResource("ParticleProcessMaterial_0skn3")
+texture = SubResource("AtlasTexture_vb3ku")
+lifetime = 0.3
+
+[node name="CastingParticle2" type="GPUParticles2D" parent="."]
+modulate = Color(2.703, 57.838, 100, 1)
+material = SubResource("CanvasItemMaterial_c4o4d")
+scale = Vector2(0.5, 0.5)
+process_material = SubResource("ParticleProcessMaterial_k7y7f")
+texture = SubResource("AtlasTexture_vb3ku")
+lifetime = 0.3
+
+[node name="BeamParticle" type="GPUParticles2D" parent="."]
+visible = false
+modulate = Color(2.703, 57.838, 100, 1)
+material = SubResource("CanvasItemMaterial_c4o4d")
+scale = Vector2(0.5, 0.5)
+process_material = SubResource("ParticleProcessMaterial_7twtx")
+texture = SubResource("AtlasTexture_vb3ku")
+lifetime = 0.3
+local_coords = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p0gyh")

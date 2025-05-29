@@ -1,0 +1,89 @@
+[gd_scene load_steps=11 format=3 uid="uid://cfpueof7tvu5j"]
+
+[ext_resource type="Script" path="res://Scripts/skull_attack.gd" id="1_4k0ow"]
+[ext_resource type="Texture2D" uid="uid://rts7v8lf8wey" path="res://Texture/FX/dark out line skull3.png" id="2_fy8rp"]
+[ext_resource type="Texture2D" uid="uid://dftkcmxu082yu" path="res://Texture/FX/flame_2.png" id="2_xix15"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pgalk"]
+particles_animation = true
+particles_anim_h_frames = 12
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_vp8f3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.252747), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_iuql5"]
+curve = SubResource("Curve_vp8f3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qte3b"]
+lifetime_randomness = 0.11
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 10.0
+angle_min = -473.2
+angle_max = -61.8
+direction = Vector3(-1, 0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 90.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_iuql5")
+anim_speed_min = 3.0
+anim_speed_max = 3.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_080ox"]
+atlas = ExtResource("2_xix15")
+region = Rect2(0, 455, 640, 66)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8icif"]
+
+[sub_resource type="Environment" id="Environment_ghni7"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 0.66
+glow_strength = 0.76
+glow_blend_mode = 1
+
+[node name="Area2D" type="Area2D" groups=["Enemy"]]
+top_level = true
+z_index = 10
+position = Vector2(5.96046e-08, 0)
+scale = Vector2(0.1, 0.1)
+collision_layer = 0
+script = ExtResource("1_4k0ow")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(2.703, 1, 1, 1)
+z_index = 9
+material = SubResource("CanvasItemMaterial_pgalk")
+amount = 100
+amount_ratio = 0.7962
+process_material = SubResource("ParticleProcessMaterial_qte3b")
+texture = SubResource("AtlasTexture_080ox")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 10
+position = Vector2(-1, 0)
+texture = ExtResource("2_fy8rp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8icif")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 9.0
+one_shot = true
+autostart = true
+
+[node name="sound_play" type="AudioStreamPlayer" parent="."]
+
+[node name="ExplosionTimer" type="Timer" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ghni7")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="ExplosionTimer" to="." method="_on_explosion_timer_timeout"]

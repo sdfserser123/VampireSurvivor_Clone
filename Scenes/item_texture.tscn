@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bb3bqiwgybkeh"]
+
+[ext_resource type="Texture2D" uid="uid://muqfjid0vssu" path="res://Texture/Retro Inventory/Weapons/Bomb.png" id="1_v787r"]
+[ext_resource type="Script" path="res://Scripts/item_texture.gd" id="2_0dyfu"]
+
+[node name="ItemTexture" type="TextureRect"]
+offset_right = 48.0
+offset_bottom = 50.0
+texture = ExtResource("1_v787r")
+expand_mode = 4
+stretch_mode = 5
+script = ExtResource("2_0dyfu")

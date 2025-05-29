@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5mrh6gvbbirh"]
+
+[ext_resource type="Script" path="res://Scripts/heal_item.gd" id="1_bhm7l"]
+[ext_resource type="Texture2D" uid="uid://bn3oh7s0b3g5f" path="res://Texture/Retro Inventory/Original/Heart_Orange_1.png" id="1_rg0u6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7c21m"]
+size = Vector2(11, 11)
+
+[node name="HealItem" type="Area2D" groups=["Heal"]]
+z_index = 2
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_bhm7l")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rg0u6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_7c21m")

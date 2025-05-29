@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://bu8lmjw2jk03t"]
+
+[ext_resource type="PackedScene" uid="uid://0k3e7moyjv18" path="res://Scenes/Player.tscn" id="2_m6oas"]
+[ext_resource type="PackedScene" uid="uid://cluonn2cjlyx3" path="res://Scenes/enemy_spawner.tscn" id="3_7bgeo"]
+[ext_resource type="PackedScene" uid="uid://bh3ro6ujyatpv" path="res://Scenes/ground.tscn" id="3_74bgp"]
+[ext_resource type="Script" path="res://Scripts/spawn_info.gd" id="4_bhxqh"]
+[ext_resource type="PackedScene" uid="uid://bxt1udb43ewng" path="res://Scenes/Enemy.tscn" id="5_ilri8"]
+
+[sub_resource type="Resource" id="Resource_iffsr"]
+script = ExtResource("4_bhxqh")
+timer_start = 0
+time_end = 2
+enemy = ExtResource("5_ilri8")
+enemy_num = 3
+enemy_spawn_delay = 1
+
+[sub_resource type="Resource" id="Resource_nt66n"]
+script = ExtResource("4_bhxqh")
+timer_start = 3
+time_end = 60
+enemy = ExtResource("5_ilri8")
+enemy_num = 5
+enemy_spawn_delay = 2
+
+[node name="World" type="Node2D"]
+
+[node name="Sprite2D" parent="." instance=ExtResource("3_74bgp")]
+position = Vector2(103, 6)
+
+[node name="Player" parent="." instance=ExtResource("2_m6oas")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(2, 2)
+
+[node name="EnemySpawner" parent="." instance=ExtResource("3_7bgeo")]
+spawns = Array[ExtResource("4_bhxqh")]([SubResource("Resource_iffsr"), SubResource("Resource_nt66n")])
+
+[node name="Loot" type="Node2D" parent="." groups=["Loot"]]

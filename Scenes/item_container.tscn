@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://7g41l875uwlv"]
+
+[ext_resource type="Texture2D" uid="uid://dmou11il28gva" path="res://Texture/UI/Border All 1.png" id="1_hrhwf"]
+[ext_resource type="Texture2D" uid="uid://4g5bb4bcan8d" path="res://Texture/Retro Inventory/Weapons/ERA Weapon Primary (1).png" id="1_ogeeo"]
+[ext_resource type="Script" path="res://Scripts/item_container.gd" id="1_qlshb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lq1fr"]
+atlas = ExtResource("1_hrhwf")
+region = Rect2(64, 0, 64, 64)
+
+[node name="ItemContainer" type="TextureRect"]
+custom_minimum_size = Vector2(91, 91)
+offset_left = -9.0
+offset_top = -9.0
+offset_right = 82.0
+offset_bottom = 82.0
+texture = SubResource("AtlasTexture_lq1fr")
+script = ExtResource("1_qlshb")
+
+[node name="ItemTexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 9.0
+offset_right = 84.0
+offset_bottom = 82.0
+texture = ExtResource("1_ogeeo")
+expand_mode = 4
+stretch_mode = 5

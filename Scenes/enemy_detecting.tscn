@@ -1,0 +1,178 @@
+[gd_scene load_steps=13 format=3 uid="uid://8dldr6bl3o56"]
+
+[ext_resource type="Script" path="res://Scripts/enemy_detecting.gd" id="1_6wurt"]
+[ext_resource type="Texture2D" uid="uid://ch611auea8nsy" path="res://Texture/FX/Bullet 24x24 Free  Part 1B.png" id="2_dqndl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rxf31"]
+atlas = ExtResource("2_dqndl")
+region = Rect2(384, 48, 192, 24)
+
+[sub_resource type="Animation" id="Animation_ibqxj"]
+resource_name = "idle"
+length = 0.5
+loop_mode = 1
+step = 0.0625
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("AtlasTexture_rxf31")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_vnokd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("AtlasTexture_rxf31")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kqck7"]
+_data = {
+"RESET": SubResource("Animation_vnokd"),
+"idle": SubResource("Animation_ibqxj")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qm7ty"]
+particles_animation = true
+particles_anim_h_frames = 8
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_064sb"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.554054, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ovfnb"]
+curve = SubResource("Curve_064sb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u860y"]
+particle_flag_disable_z = true
+spread = 104.318
+initial_velocity_min = 120.0
+initial_velocity_max = 120.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.15
+scale_max = 0.15
+scale_curve = SubResource("CurveTexture_ovfnb")
+anim_speed_min = 0.5
+anim_speed_max = 0.5
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jipiu"]
+atlas = ExtResource("2_dqndl")
+region = Rect2(192, 0, 192, 24)
+
+[sub_resource type="Environment" id="Environment_kummf"]
+background_mode = 3
+glow_enabled = true
+glow_levels/4 = 1.0
+glow_intensity = 0.12
+glow_strength = 0.87
+glow_blend_mode = 1
+
+[node name="EnemyDetecting" type="RayCast2D"]
+light_mask = 4
+visibility_layer = 4
+z_index = 10
+collision_mask = 12
+script = ExtResource("1_6wurt")
+
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["Attack"]]
+modulate = Color(5.946, 87.568, 84.324, 1)
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_rxf31")
+hframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_kqck7")
+}
+autoplay = "idle"
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 100, 0)
+width = 3.0
+default_color = Color(1, 36.757, 82.162, 1)
+
+[node name="CastingParticle" type="GPUParticles2D" parent="."]
+modulate = Color(2.703, 57.838, 100, 1)
+material = SubResource("CanvasItemMaterial_qm7ty")
+scale = Vector2(0.5, 0.5)
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_u860y")
+texture = SubResource("AtlasTexture_jipiu")
+lifetime = 0.3
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kummf")
+
+[node name="DamageTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="DamageInterval" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[connection signal="timeout" from="DamageInterval" to="." method="_on_damage_interval_timeout"]

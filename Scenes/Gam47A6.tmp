@@ -1,0 +1,69 @@
+[gd_scene load_steps=14 format=3 uid="uid://bu8lmjw2jk03t"]
+
+[ext_resource type="PackedScene" uid="uid://0k3e7moyjv18" path="res://Scenes/Player.tscn" id="2_m6oas"]
+[ext_resource type="PackedScene" uid="uid://cluonn2cjlyx3" path="res://Scenes/enemy_spawner.tscn" id="3_7bgeo"]
+[ext_resource type="PackedScene" uid="uid://bh3ro6ujyatpv" path="res://Scenes/ground.tscn" id="3_74bgp"]
+[ext_resource type="Script" path="res://Scripts/spawn_info.gd" id="4_bhxqh"]
+[ext_resource type="PackedScene" uid="uid://bxt1udb43ewng" path="res://Scenes/normal_enemy.tscn" id="5_34he7"]
+[ext_resource type="PackedScene" uid="uid://djm0doj1v10mh" path="res://Scenes/big_enemy.tscn" id="6_a6nrm"]
+[ext_resource type="PackedScene" uid="uid://iapdjnffhvky" path="res://Scenes/flier_spawner.tscn" id="7_bmq4s"]
+[ext_resource type="PackedScene" uid="uid://dtqmuwwelcd0j" path="res://Scenes/magnet_item.tscn" id="8_ttsrl"]
+
+[sub_resource type="Resource" id="Resource_wg8rl"]
+script = ExtResource("4_bhxqh")
+timer_start = 0
+time_end = 2
+enemy = ExtResource("5_34he7")
+enemy_num = 6
+enemy_spawn_delay = 1
+
+[sub_resource type="Resource" id="Resource_v2v85"]
+script = ExtResource("4_bhxqh")
+timer_start = 3
+time_end = 60
+enemy = ExtResource("5_34he7")
+enemy_num = 10
+enemy_spawn_delay = 4
+
+[sub_resource type="Resource" id="Resource_306r6"]
+script = ExtResource("4_bhxqh")
+timer_start = 60
+time_end = 735
+enemy = ExtResource("5_34he7")
+enemy_num = 10
+enemy_spawn_delay = 4
+
+[sub_resource type="Resource" id="Resource_6dk2i"]
+script = ExtResource("4_bhxqh")
+timer_start = 60
+time_end = 300
+enemy = ExtResource("6_a6nrm")
+enemy_num = 3
+enemy_spawn_delay = 4
+
+[sub_resource type="Resource" id="Resource_545b3"]
+script = ExtResource("4_bhxqh")
+timer_start = 75
+time_end = 300
+enemy = ExtResource("7_bmq4s")
+enemy_num = 1
+enemy_spawn_delay = 15
+
+[node name="World" type="Node2D"]
+metadata/_edit_vertical_guides_ = [-210.0]
+
+[node name="Sprite2D" parent="." instance=ExtResource("3_74bgp")]
+position = Vector2(103, 6)
+
+[node name="Player" parent="." instance=ExtResource("2_m6oas")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(2, 2)
+
+[node name="EnemySpawner" parent="." instance=ExtResource("3_7bgeo")]
+spawns = Array[ExtResource("4_bhxqh")]([SubResource("Resource_wg8rl"), SubResource("Resource_v2v85"), SubResource("Resource_306r6"), SubResource("Resource_6dk2i"), SubResource("Resource_545b3")])
+
+[node name="Loot" type="Node2D" parent="." groups=["Loot"]]
+
+[node name="Magnet_Item" parent="Loot" instance=ExtResource("8_ttsrl")]
+position = Vector2(-58, 25)

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://2tqsbx4qd2u1"]
+
+[ext_resource type="Script" path="res://Scripts/railgun.gd" id="1_b1t4r"]
+[ext_resource type="Texture2D" uid="uid://cnbvmqb21uvfj" path="res://Texture/Laser Sprites/18.png" id="1_gme6m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p7hrn"]
+size = Vector2(8, 2)
+
+[node name="Railgun" type="Area2D" groups=["Attack"]]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_b1t4r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.0869566, 0.0869565)
+texture = ExtResource("1_gme6m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0)
+shape = SubResource("RectangleShape2D_p7hrn")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 20.0
+one_shot = true
+autostart = true

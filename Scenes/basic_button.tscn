@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://6y05sobxwsxo"]
+
+[ext_resource type="Texture2D" uid="uid://b1x1qnadg01un" path="res://Texture/button/Pixel UI pack 1.png" id="1_3m53i"]
+[ext_resource type="Script" path="res://Scripts/basic_button.gd" id="2_8mmtg"]
+[ext_resource type="AudioStream" uid="uid://qoy881c0mpmm" path="res://Sound/Button/Button.wav" id="3_i8te7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a71u0"]
+atlas = ExtResource("1_3m53i")
+region = Rect2(577, 129, 94, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4bgm"]
+atlas = ExtResource("1_3m53i")
+region = Rect2(833, 129, 94, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c78vq"]
+atlas = ExtResource("1_3m53i")
+region = Rect2(705, 129, 94, 30)
+
+[node name="basic_button" type="TextureButton"]
+offset_right = 94.0
+offset_bottom = 30.0
+texture_normal = SubResource("AtlasTexture_a71u0")
+texture_pressed = SubResource("AtlasTexture_d4bgm")
+texture_hover = SubResource("AtlasTexture_c78vq")
+stretch_mode = 5
+script = ExtResource("2_8mmtg")
+
+[node name="snd_click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_i8te7")
+volume_db = -10.0
+
+[connection signal="click_end" from="." to="." method="_on_click_end"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="finished" from="snd_click" to="." method="_on_snd_click_finished"]

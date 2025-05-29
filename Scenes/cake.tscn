@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxlliww2voo78"]
+
+[ext_resource type="Texture2D" uid="uid://xsxv430cudw4" path="res://Texture/Pixel Art Food Pack/Strawberry cake.png" id="1_006bv"]
+[ext_resource type="Script" path="res://Scripts/cake.gd" id="1_8l4ll"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yth47"]
+size = Vector2(31.0433, 18.7266)
+
+[node name="Cake" type="Area2D" groups=["Cake"]]
+z_index = 10
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_8l4ll")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_006bv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.96483, 1.14213)
+rotation = -0.242601
+shape = SubResource("RectangleShape2D_yth47")
